@@ -1,0 +1,17 @@
+*{
+  
+  font-family: 'Alegreya', serif;
+}
+
+h2{
+    margin-left: 35%;
+    margin-top: 5%;
+}
+
+
+.response, p{
+    color: yellowgreen;
+    font-size: 30px;
+    margin-left: 45%;
+    padding: 20px;
+}

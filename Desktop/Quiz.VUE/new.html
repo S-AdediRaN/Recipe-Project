@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel = "stylesheet" href ="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya|Sniglet" rel="stylesheet">
+</head>
+
+<form id="app">
+    <div v-show ="status <=20"><p> Question {{status}} / {{ quiz.questions.length}} </p></div>
+    <div v-for="(question, index) in quiz.questions">
+      <div v-show="index === questionIndex">
+        <h2>{{ question.text }}</h2>
+        <ol class = "response">
+          <li v-for="response in question.responses" >
+                   <input type = "radio"
+                             v-bind:value="response.correct" 
+                             v-bind:name="index" 
+                             v-model="userResponses[index]"
+                      v-on:click="next"> {{response.text}}
+                  
+          </li>
+        </ol>
+   
+    
+      </div>
+    </div>
+    <div v-show="questionIndex === quiz.questions.length">
+      <h2>
+      Quiz finished
+    </h2>
+      <p>
+        Total score: {{ score()}} / {{ quiz.questions.length }}
+      </p>
+    </div>
+
+    
+    
+    
+    
+    
+  </form>
+  <script>
+  
+  var quiz = {
+  questions: [
+    {
+      text: "Graphics defined by SVG is in which format?",
+      responses: [
+        {text: 'HTML'}, 
+        {text: 'XML', correct: true},
+        {text: 'CSS'}, 
+      ]
+    }, {
+      text: "Who is making the Web standards?",
+      responses: [
+        {text: 'TheWWWC', correct: true}, 
+        {text: 'Microsoft'},
+        {text: 'Mozilla'},
+      ]
+    } , {
+      text: "What is the correct HTML element for inserting a line break?",
+      responses: [
+        {text: 'br', correct: true}, 
+        {text: 'break'},
+        {text: 'lb'},
+      ]
+    } , {
+      text: "Select the option to make a list that lists the items with bullets?",
+      responses: [
+        {text: 'ol', correct: true}, 
+        {text: 'ul'},
+        {text: 'list'},
+      ]
+    } , {
+      text: "Select the property that is used to create spacing between HTML elements?",
+      responses: [
+        {text: 'margin', correct: true}, 
+        {text: 'border'},
+        {text: 'padding'},
+      ]
+    } , {
+      text: "Select the appropriate HTML tag used for the largest heading?",
+      responses: [
+        {text: 'h1', correct: true}, 
+        {text: 'heading'},
+        {text: 'head'},
+      ]
+    } , {
+      text: "Select the correct HTML tag to make a text bold?",
+      responses: [
+        {text: 'bold', correct: true}, 
+        {text: 'heavy'},
+        {text: 'big'},
+      ]
+    } , {
+      text: "What is the range of heading tags available using HTML?",
+      responses: [
+        {text: 'h1 to h4 ', correct: true}, 
+        {text: 'h1 to h6'},
+        {text: 'h1 to h12'},
+      ]
+    } , {
+      text: "What's the best place to put CSS styles in the HTML file?",
+      responses: [
+        {text: 'footer section', correct: true}, 
+        {text: 'body section'},
+        {text: 'style section'},
+      ]
+    } , {
+      text: "Which CSS property controls the text size?",
+      responses: [
+        {text: 'font-size', correct: true}, 
+        {text: 'text-size'},
+        {text: 'font-style'},
+      ]
+    } , {
+      text: "Which property is used to change the font of an element?",
+      responses: [
+        {text: 'font-weight'}, 
+        {text: 'text-family', correct: true},
+        {text: 'font-style'},
+      ]
+    } , {
+      text: "Choose the correct HTML element to define emphasized text",
+      responses: [
+        {text: 'em', correct: true}, 
+        {text: 'italic'},
+        {text: 'i'},
+      ]
+    } , {
+      text: "The is doctype mandatory",
+      responses: [
+        {text: 'true', correct: true}, 
+        {text: 'false'},
+        {text: 'Not really'},
+      ]
+    } , {
+      text: "JavaScript is the same as Java.",
+      responses: [
+        {text: 'true', correct: true}, 
+        {text: 'false'},
+        {text: 'Maybe'},
+      ]
+    } , {
+      text: "Which event occurs when the user clicks on an HTML element?",
+      responses: [
+        {text: 'onclick', correct: true}, 
+        {text: 'on- touch'},
+        {text: 'on- mouse'},
+      ]
+    } , {
+      text: "How do you declare a JavaScript variable?",
+      responses: [
+        {text: 'v carName', correct: true}, 
+        {text: 'var Carname'},
+        {text: 'var carName'},
+      ]
+    } , {
+      text: "What will the following code return: Boolean(10 > 9)",
+      responses: [
+        {text: 'true', correct: true}, 
+        {text: 'false'},
+        {text: 'NaN'},
+      ]
+    } , {
+      text: "Is JavaScript case-sensitive?",
+      responses: [
+        {text: 'Yes', correct: true}, 
+        {text: 'No'},
+        {text: 'Sometimes'},
+      ]
+    } , {
+      text: "Which HTML element defines the title of a document?",
+      responses: [
+        {text: 'head'}, 
+        {text: 'title', correct: true},
+        {text: 'meta'},
+      ]
+    } , {
+      text: "Who came up with the theory of relativity?",
+      responses: [
+        {text: 'Sir Isaac Newton', correct: true}, 
+        {text: 'Nicolaus Copernicus'},
+        {text: 'Albert Einstein'},
+      ]
+    } 
+  ]
+};
+      
+new Vue({
+  el: '#app',
+  data: {
+    quiz: quiz,
+    questionIndex: 0,
+    status: 1,
+    userResponses: Array(quiz.questions.length).fill(false),
+},
+  methods: {
+
+    next: function() {
+      this.questionIndex++;
+      this.status++;
+    },
+    score: function() {
+      return this.userResponses.filter(function(val) { return val }).length;
+    }
+  }
+});
+  
+  </script>
+</html>
